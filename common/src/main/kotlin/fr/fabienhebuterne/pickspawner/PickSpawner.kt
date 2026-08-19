@@ -56,18 +56,21 @@ class PickSpawner : JavaPlugin() {
             "v1_20_R3" -> Utils_1_20_R3()
             else -> {
                 // checking version in class name has changed since 1.20.6
-                when (minecraftVersion) {
-                    "1.20.6-R0.1-SNAPSHOT" -> Utils_1_20_R4()
-                    "1.21-R0.1-SNAPSHOT" -> Utils_1_21_R1()
-                    "1.21.1-R0.1-SNAPSHOT" -> Utils_1_21_R1()
-                    "1.21.3-R0.1-SNAPSHOT" -> Utils_1_21_R2()
-                    "1.21.4-R0.1-SNAPSHOT" -> Utils_1_21_R3()
-                    "1.21.8-R0.1-SNAPSHOT" -> Utils_1_21_R5()
+                when {
+                    minecraftVersion == "1.20.6-R0.1-SNAPSHOT" -> Utils_1_20_R4()
+                    minecraftVersion == "1.21-R0.1-SNAPSHOT" -> Utils_1_21_R1()
+                    minecraftVersion == "1.21.1-R0.1-SNAPSHOT" -> Utils_1_21_R1()
+                    minecraftVersion == "1.21.3-R0.1-SNAPSHOT" -> Utils_1_21_R2()
+                    minecraftVersion == "1.21.4-R0.1-SNAPSHOT" -> Utils_1_21_R3()
+                    minecraftVersion == "1.21.8-R0.1-SNAPSHOT" -> Utils_1_21_R5()
                     // r0.1 = 1.21.11 on paper, r0.2 = 1.21.11 on spigot
                     // todo fhe : add gradle module with interface to add diff between spigot and paper
-                    "1.21.11-R0.1-SNAPSHOT", "1.21.11-R0.2-SNAPSHOT" -> Utils_1_21_R6()
-                    // Minecraft switched to Mojang's year.release versioning with 26.x
-                    "26.2-R0.1-SNAPSHOT", "26.2-R0.2-SNAPSHOT" -> Utils_26_R2()
+                    minecraftVersion == "1.21.11-R0.1-SNAPSHOT" || minecraftVersion == "1.21.11-R0.2-SNAPSHOT" -> Utils_1_21_R6()
+                    // Minecraft switched to Mojang's year.release versioning with 26.x.
+                    // Spigot reports "26.2-R0.x-SNAPSHOT", Paper reports "26.2.build.<N>-<channel>"
+                    // (N changes with every Paper build), so match on the "26.2" prefix instead of
+                    // an exact string.
+                    minecraftVersion.startsWith("26.2-") || minecraftVersion.startsWith("26.2.build.") -> Utils_26_R2()
                     else -> {
                         Bukkit.getLogger().severe("Your server version $currentVersion / $minecraftVersion isn't compatible with PickSpawner")
                         server.pluginManager.disablePlugin(this)
