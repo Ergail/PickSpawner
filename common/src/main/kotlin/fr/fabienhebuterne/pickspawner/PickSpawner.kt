@@ -66,6 +66,8 @@ class PickSpawner : JavaPlugin() {
                     // r0.1 = 1.21.11 on paper, r0.2 = 1.21.11 on spigot
                     // todo fhe : add gradle module with interface to add diff between spigot and paper
                     "1.21.11-R0.1-SNAPSHOT", "1.21.11-R0.2-SNAPSHOT" -> Utils_1_21_R6()
+                    // Minecraft switched to Mojang's year.release versioning with 26.x
+                    "26.2-R0.1-SNAPSHOT", "26.2-R0.2-SNAPSHOT" -> Utils_26_R2()
                     else -> {
                         Bukkit.getLogger().severe("Your server version $currentVersion / $minecraftVersion isn't compatible with PickSpawner")
                         server.pluginManager.disablePlugin(this)

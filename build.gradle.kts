@@ -10,6 +10,10 @@ allprojects {
     apply(plugin = "kotlin")
 
     repositories {
+        // mavenLocal is needed for org.spigotmc:spigot:26.2-R0.1-SNAPSHOT (full NMS jar), which is
+        // not published anywhere public and must be produced locally with Spigot BuildTools
+        // (`java -jar BuildTools.jar --rev 26.2`, requires a Java 25/26 JDK) before building nms:v26_R2.
+        mavenLocal()
         mavenCentral()
         maven("https://hub.spigotmc.org/nexus/content/repositories/snapshots/")
         maven("https://oss.sonatype.org/content/repositories/snapshots")
