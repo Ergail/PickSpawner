@@ -27,7 +27,7 @@ class GiveCommand(
 ) : AbstractCommand() {
 
     override var literalArgumentBuilder: LiteralArgumentBuilder<String> =
-        LiteralArgumentBuilder.literal<String?>("give")
+        LiteralArgumentBuilder.literal<String>("give")
             .then(
                 RequiredArgumentBuilder.argument<String?, String?>("playerNameOrUuid", StringArgumentType.word())
                     .then(LiteralArgumentBuilder.literal<String>("spawner").entityTypesToCommodore())

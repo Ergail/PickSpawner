@@ -38,45 +38,22 @@ class PickSpawner : JavaPlugin() {
     override fun onDisable() {}
 
     private fun loadNms() {
-        val currentVersion: String? =
-            Bukkit.getServer().javaClass.getPackage().name.replace(".", ",").split(",".toRegex())
-                .dropLastWhile { it.isEmpty() }
-                .toTypedArray()
-                .getOrNull(3)
-
         val minecraftVersion: String = Bukkit.getServer().bukkitVersion
 
-        nms = when (currentVersion) {
-            "v1_18_R2" -> Utils_1_18_R2()
-            "v1_19_R1" -> Utils_1_19_R1()
-            "v1_19_R2" -> Utils_1_19_R2()
-            "v1_19_R3" -> Utils_1_19_R3()
-            "v1_20_R1" -> Utils_1_20_R1()
-            "v1_20_R2" -> Utils_1_20_R2()
-            "v1_20_R3" -> Utils_1_20_R3()
-            else -> {
-                // first is spigot and second is paper
-                if (minecraftVersion == "26.2-R0.1-SNAPSHOT" || minecraftVersion.startsWith("26.2.build")) {
-                    Utils_26_2_R1()
-                } else {
-                    // checking version in class name has changed since 1.20.6
-                    when (minecraftVersion) {
-                        "1.20.6-R0.1-SNAPSHOT" -> Utils_1_20_R4()
-                        "1.21-R0.1-SNAPSHOT" -> Utils_1_21_R1()
-                        "1.21.1-R0.1-SNAPSHOT" -> Utils_1_21_R1()
-                        "1.21.3-R0.1-SNAPSHOT" -> Utils_1_21_R2()
-                        "1.21.4-R0.1-SNAPSHOT" -> Utils_1_21_R3()
-                        "1.21.8-R0.1-SNAPSHOT" -> Utils_1_21_R5()
-                        // r0.1 = 1.21.11 on paper, r0.2 = 1.21.11 on spigot
-                        // todo fhe : add gradle module with interface to add diff between spigot and paper
-                        "1.21.11-R0.1-SNAPSHOT", "1.21.11-R0.2-SNAPSHOT" -> Utils_1_21_R6()
-                        else -> {
-                            Bukkit.getLogger()
-                                .severe("Your server version $currentVersion / $minecraftVersion isn't compatible with PickSpawner")
-                            server.pluginManager.disablePlugin(this)
-                            throw IllegalStateException("Your server version $currentVersion / $minecraftVersion isn't compatible with PickSpawner")
-                        }
-                    }
+        // first is spigot and second is paper
+        nms = if (minecraftVersion == "26.2-R0.1-SNAPSHOT" || minecraftVersion.startsWith("26.2.build")) {
+            Utils_26_2_R1()
+        } else {
+            // checking version in class name has changed since 1.20.6
+            when (minecraftVersion) {
+                // r0.1 = 1.21.11 on paper, r0.2 = 1.21.11 on spigot
+                // todo fhe : add gradle module with interface to add diff between spigot and paper
+                "1.21.11-R0.1-SNAPSHOT", "1.21.11-R0.2-SNAPSHOT" -> Utils_1_21_R6()
+                else -> {
+                    Bukkit.getLogger()
+                        .severe("Your server version $minecraftVersion isn't compatible with PickSpawner")
+                    server.pluginManager.disablePlugin(this)
+                    throw IllegalStateException("Your server version $minecraftVersion isn't compatible with PickSpawner")
                 }
             }
         }
