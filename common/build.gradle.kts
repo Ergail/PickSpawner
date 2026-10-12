@@ -20,6 +20,7 @@ dependencies {
     implementation(project(":nms:interfaces"))
     implementation(project(":nms:v1_21_R6"))
     implementation(project(":nms:v26_2_R1"))
+    implementation(project(":nms:v26_3_R1"))
 
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 }

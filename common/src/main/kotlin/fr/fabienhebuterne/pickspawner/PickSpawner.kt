@@ -41,7 +41,9 @@ class PickSpawner : JavaPlugin() {
         val minecraftVersion: String = Bukkit.getServer().bukkitVersion
 
         // first is spigot and second is paper
-        nms = if (minecraftVersion == "26.2-R0.1-SNAPSHOT" || minecraftVersion.startsWith("26.2.build")) {
+        nms = if (minecraftVersion == "26.3-R0.1-SNAPSHOT" || minecraftVersion.startsWith("26.3.build")) {
+            Utils_26_3_R1()
+        } else if (minecraftVersion == "26.2-R0.1-SNAPSHOT" || minecraftVersion.startsWith("26.2.build")) {
             Utils_26_2_R1()
         } else {
             // checking version in class name has changed since 1.20.6

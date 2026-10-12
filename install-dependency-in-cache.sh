@@ -43,3 +43,13 @@ for versionWithMd5 in "${versionsMd5[@]}"; do
     fi
   fi
 done
+# 26.3 : Spigot 26.3 isn't published yet, so nms:v26_3_R1 compiles against Paper's patched server jar
+# (Mojang mappings, same NMS classes). The download is a paperclip launcher: patch it once, then keep
+# versions/26.3/paper-26.3.jar as tmp/26.3/paper-26.3.jar.
+mkdir -p ./26.3
+if [[ ! -f ./26.3/paper-26.3.jar ]] || [[ "$(md5sum ./26.3/paper-26.3.jar | cut -d' ' -f1)" != "0b56df36b11458839d6694348d57c68f" ]]; then
+  echo "download paper-26.3-177.jar (paperclip)"
+  curl -sL -o ./26.3/paperclip-26.3-177.jar "https://fill-data.papermc.io/v1/objects/580c266b6526bb34752e9c2c274be025f763af1ce5b3fa662fa2b3006f966c13/paper-26.3-177.jar"
+  (cd ./26.3 && java -Dpaperclip.patchonly=true -jar paperclip-26.3-177.jar && cp versions/26.3/paper-26.3.jar ./paper-26.3.jar)
+  echo "paper-26.3.jar - $(md5sum ./26.3/paper-26.3.jar | cut -d' ' -f1)"
+fi
