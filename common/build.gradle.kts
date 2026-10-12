@@ -1,12 +1,12 @@
 plugins {
     kotlin("jvm")
-    id("com.github.johnrengelman.shadow")
+    id("com.gradleup.shadow")
 }
 
 configurations["testImplementation"].extendsFrom(configurations["compileOnly"])
 
 dependencies {
-    compileOnly("org.spigotmc:spigot-api:1.18.2-R0.1-SNAPSHOT")
+    compileOnly("org.spigotmc:spigot-api:1.21.11-R0.1-SNAPSHOT")
     compileOnly("com.github.MilkBowl:VaultAPI:${Versions.vault}") {
         exclude(group = "org.bukkit", module = "bukkit")
     }
@@ -18,20 +18,10 @@ dependencies {
     implementation("me.lucko:commodore:${Versions.commodore}")
 
     implementation(project(":nms:interfaces"))
-    implementation(project(":nms:v1_18_R2"))
-    implementation(project(":nms:v1_19_R1"))
-    implementation(project(":nms:v1_19_R2"))
-    implementation(project(":nms:v1_19_R3"))
-    implementation(project(":nms:v1_20_R1"))
-    implementation(project(":nms:v1_20_R2"))
-    implementation(project(":nms:v1_20_R3"))
-    implementation(project(":nms:v1_20_R4"))
-    implementation(project(":nms:v1_21_R1"))
-    implementation(project(":nms:v1_21_R2"))
-    implementation(project(":nms:v1_21_R3"))
-    implementation(project(":nms:v1_21_R5"))
     implementation(project(":nms:v1_21_R6"))
-    implementation(project(":nms:v26_R2"))
+    implementation(project(":nms:v26_2_R1"))
+
+    testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 }
 
 tasks.processResources {

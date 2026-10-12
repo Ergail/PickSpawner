@@ -1,6 +1,6 @@
 plugins {
     kotlin("jvm") version Versions.kotlinJvm
-    id("com.github.johnrengelman.shadow") version Versions.shadowJar
+    id("com.gradleup.shadow") version Versions.shadowJar
 }
 
 allprojects {
@@ -24,29 +24,13 @@ allprojects {
     defaultDependencies()
     testDependencies()
 
-    val javaVersion = JavaVersion.VERSION_17.toString()
-
-    tasks.compileKotlin {
-        kotlinOptions {
-            jvmTarget = javaVersion
+    kotlin {
+        jvmToolchain {
+            languageVersion.set(JavaLanguageVersion.of(21))
+            vendor.set(JvmVendorSpec.ADOPTIUM)
         }
     }
 
-    tasks.compileTestKotlin {
-        kotlinOptions {
-            jvmTarget = javaVersion
-        }
-    }
-
-    tasks.compileJava {
-        sourceCompatibility = javaVersion
-        targetCompatibility = javaVersion
-    }
-
-    tasks.compileTestJava {
-        sourceCompatibility = javaVersion
-        targetCompatibility = javaVersion
-    }
 }
 
 // This is workaround to fix build issue with jackson 2.17.x and shadowJar 8.1.x

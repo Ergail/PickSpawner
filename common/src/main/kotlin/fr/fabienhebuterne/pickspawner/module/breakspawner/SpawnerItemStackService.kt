@@ -22,17 +22,19 @@ class SpawnerItemStackService(
         location: Location,
         creatureSpawner: CreatureSpawner
     ) {
+        val spawnedType = creatureSpawner.spawnedType ?: return
+
         if (instance.defaultConfig.debug) {
             Bukkit.getLogger().info(
                 instance.translationConfig.getSpawnerPlayerBreak(
                     player.name,
-                    creatureSpawner.spawnedType,
+                    spawnedType,
                     location
                 )
             )
         }
 
-        val itemStack = itemInitService.initSpawnerItemStack(creatureSpawner.spawnedType)
+        val itemStack = itemInitService.initSpawnerItemStack(spawnedType)
 
         if (player.inventory.firstEmpty() != -1) {
             player.inventory.addItem(itemStack)

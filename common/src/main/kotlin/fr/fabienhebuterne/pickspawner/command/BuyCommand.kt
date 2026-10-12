@@ -26,7 +26,7 @@ class BuyCommand(
 ) : AbstractCommand() {
 
     override var literalArgumentBuilder: LiteralArgumentBuilder<String> =
-        LiteralArgumentBuilder.literal<String?>("buy")
+        LiteralArgumentBuilder.literal<String>("buy")
             .then(
                 LiteralArgumentBuilder.literal<String?>("custom_pickaxe")
                     .then(LiteralArgumentBuilder.literal("quantity"))
